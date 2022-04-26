@@ -16,7 +16,7 @@ import { AppService } from './app.service';
       cache: true,
       isGlobal: true,
     }),
-    CacheModule.registerAsync({
+    CacheModule.register({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
         store: redisStore,
