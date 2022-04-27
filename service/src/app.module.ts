@@ -1,34 +1,27 @@
-import * as redisStore from 'cache-manager-redis-store';
-import { Module, CacheModule } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ScheduleModule } from '@nestjs/schedule';
+import { ConfigModule } from '@nestjs/config';
+import { Module } from '@nestjs/common';
 
-import databaseConfig, { DbConfig } from './config/database.config';
-import appConfig from './config/app-config';
-
+import { WatcherModule } from './watcher/watcher.module';
 import { HealthModule } from './health/health.module';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+
+import { RedisCacheModule } from './redis-cache/cache.module';
+import databaseConfig from './config/database.config';
+import appConfig from './config/app-config';
 
 @Module({
   imports: [
+    ScheduleModule.forRoot(),
     ConfigModule.forRoot({
       load: [appConfig, databaseConfig],
       cache: true,
       isGlobal: true,
     }),
-    CacheModule.register({
-      imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) => ({
-        store: redisStore,
-        host: configService.get<DbConfig>('database').REDIS_HOST,
-        port: configService.get<DbConfig>('database').REDIS_PORT,
-        password: configService.get<DbConfig>('database').REDIS_PASSWORD,
-      }),
-      inject: [ConfigService],
-    }),
     HealthModule,
+    RedisCacheModule,
+    WatcherModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}

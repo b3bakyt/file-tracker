@@ -1,13 +1,15 @@
-import { Controller, Get } from '@nestjs/common';
-import {
-  HealthCheckService,
-  HealthCheck,
-  MicroserviceHealthIndicator,
-  HttpHealthIndicator,
-} from '@nestjs/terminus';
 import { RedisOptions, Transport } from '@nestjs/microservices';
-import { DbConfig } from '../config/database.config';
+import { Controller, Get } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import {
+  HealthCheck,
+  HealthCheckService,
+  HttpHealthIndicator,
+  MicroserviceHealthIndicator,
+} from '@nestjs/terminus';
+
+import { DbConfig } from '../config/database.config';
+import { AppConfig } from '../config/app-config';
 
 @Controller('health')
 export class HealthController {
@@ -21,8 +23,10 @@ export class HealthController {
   @Get()
   @HealthCheck()
   async check() {
+    const MS_PORT: number = this.configService.get<AppConfig>('app').PORT;
+
     return this.health.check([
-      () => this.http.pingCheck('Basic Check', 'http://localhost:3000'),
+      () => this.http.pingCheck('Basic Check', `http://localhost:${MS_PORT}`),
       () =>
         this.microservice.pingCheck<RedisOptions>('redis', {
           transport: Transport.REDIS,
