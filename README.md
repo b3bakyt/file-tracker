@@ -19,7 +19,7 @@ $ yarn
 $ yarn build
 ```
 
-## Running the app
+## Running the app without Docker
 
 Create .env file.
 
@@ -30,6 +30,14 @@ Modify Redis variables: REDIS_HOST, REDIS_PASSWORD, REDIS_PORT.
 $ cp .env.example .env
 ```
 
+Start Redis server
+```Bash
+$ cd scripts/
+$ chmod ug+x *.sh
+$ ./redis-up.sh
+```
+
+Run app
 ```bash
 # development
 $ cd service/
