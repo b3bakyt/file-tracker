@@ -21,6 +21,15 @@ $ yarn build
 
 ## Running the app
 
+Create .env file.
+
+Modify FILES_DIR (absolute path to .batch files directory).
+
+Modify Redis variables: REDIS_HOST, REDIS_PASSWORD, REDIS_PORT.
+```Bash
+$ cp .env.example .env
+```
+
 ```bash
 # development
 $ cd service/
