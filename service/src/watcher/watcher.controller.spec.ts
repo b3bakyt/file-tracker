@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { ConfigService } from '@nestjs/config';
 
 import { WatcherController } from './watcher.controller';
-import { RedisService } from '../redis-cache/redis.service';
+import { RedisCacheService } from '../redis-cache/redis-cache.service';
 
 describe('FileWatcherController', () => {
   let controller: WatcherController;
@@ -21,9 +21,9 @@ describe('FileWatcherController', () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [WatcherController],
       imports: [],
-      providers: [ConfigService, RedisService],
+      providers: [ConfigService, RedisCacheService],
     })
-      .overrideProvider(RedisService)
+      .overrideProvider(RedisCacheService)
       .useValue(redisServiceMock)
       .overrideProvider(ConfigService)
       .useValue(configServiceMock)

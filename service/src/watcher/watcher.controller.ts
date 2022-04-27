@@ -7,7 +7,7 @@ import * as moment from 'moment';
 import * as path from 'path';
 
 import { AppConfig } from '../config/app-config';
-import { RedisService } from '../redis-cache/redis.service';
+import { RedisCacheService } from '../redis-cache/redis-cache.service';
 
 @Controller()
 export class WatcherController {
@@ -21,7 +21,7 @@ export class WatcherController {
 
   constructor(
     private readonly configService: ConfigService,
-    private readonly cacheService: RedisService,
+    private readonly cacheService: RedisCacheService,
   ) {
     this.filesDir = this.configService.get<AppConfig>('app').FILES_DIR;
     this.customerIds = this.configService.get<AppConfig>('app').CUSTOMER_IDS; // This could be taken from DB or file. Just kept is simpler

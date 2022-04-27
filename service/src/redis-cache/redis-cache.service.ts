@@ -2,8 +2,8 @@ import { CACHE_MANAGER, Inject, Injectable, Logger } from '@nestjs/common';
 import { Cache } from 'cache-manager';
 
 @Injectable()
-export class RedisService {
-  private logger = new Logger(RedisService.name);
+export class RedisCacheService {
+  private logger = new Logger(RedisCacheService.name);
 
   constructor(@Inject(CACHE_MANAGER) private cacheManager: Cache) {}
 

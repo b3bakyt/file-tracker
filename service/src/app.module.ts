@@ -5,7 +5,7 @@ import { Module } from '@nestjs/common';
 import { WatcherModule } from './watcher/watcher.module';
 import { HealthModule } from './health/health.module';
 
-import { RedisCacheModule } from './redis-cache/cache.module';
+import { RedisCacheModule } from './redis-cache/redis-cache.module';
 import databaseConfig from './config/database.config';
 import appConfig from './config/app-config';
 

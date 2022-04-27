@@ -1,8 +1,9 @@
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as redisStore from 'cache-manager-redis-store';
 import { Module, CacheModule } from '@nestjs/common';
+
+import { RedisCacheService } from './redis-cache.service';
 import { DbConfig } from '../config/database.config';
-import { RedisService } from './redis.service';
 
 @Module({
   imports: [
@@ -17,7 +18,7 @@ import { RedisService } from './redis.service';
       inject: [ConfigService],
     }),
   ],
-  providers: [RedisService],
-  exports: [RedisService],
+  providers: [RedisCacheService],
+  exports: [RedisCacheService],
 })
 export class RedisCacheModule {}

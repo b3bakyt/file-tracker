@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 
-import { RedisCacheModule } from '../redis-cache/cache.module';
+import { RedisCacheModule } from '../redis-cache/redis-cache.module';
 import { WatcherController } from './watcher.controller';
 
 @Module({
