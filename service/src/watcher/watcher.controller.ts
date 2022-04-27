@@ -32,12 +32,6 @@ export class WatcherController {
     });
     watcher
       .on('add', this.processEvent.bind(this))
-      .on('change', function (path) {
-        console.log('File', path, 'has been changed');
-      })
-      .on('unlink', function (path) {
-        console.log('File', path, 'has been removed');
-      })
       .on('error', function (error) {
         console.error('Error happened', error);
       });
@@ -70,7 +64,6 @@ export class WatcherController {
 
   private async fileIsCreatedLongAgo(fullPath: string) {
     const stats = await fs.stat(fullPath);
-    console.log('stats:', stats.birthtime);
     const fileCreatedTime = moment(stats.birthtime).valueOf();
     const beforeMinuteTime = moment().subtract(1, 'minute').valueOf();
     return beforeMinuteTime > fileCreatedTime;
@@ -86,13 +79,12 @@ export class WatcherController {
     | minutes
     seconds (optional)
      */
-  @Cron('*/10 * * * * *') // To trigger it most accurately Linux cron might be used (If needed!)
+  @Cron('0 * * * * *') // To trigger it most accurately Linux cron might be used (If needed!)
   async handleCron() {
     const lastDate: string = await this.cacheService.getLastFileCreatedDate();
     const lastFileDate = moment(lastDate || this.lastValidFeedTime).valueOf();
 
     if (this.noNewFileCreated(lastFileDate)) {
-      this.logger.log('No file created yet');
       return;
     }
 

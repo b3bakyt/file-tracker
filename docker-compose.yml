@@ -19,7 +19,7 @@ services:
     restart: always
     volumes:
       - ./service:/usr/src/app
-      - /home/bob/WebstormProjects/todos/file-tracker/files:/usr/src/files
+      - ./files:/usr/src/files
     ports:
       - "3000:3000"
     networks:

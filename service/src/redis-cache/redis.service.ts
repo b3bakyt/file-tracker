@@ -23,7 +23,6 @@ export class RedisService {
       const date = await this.cacheManager.get<string>(
         'last-file-created-date',
       );
-      this.logger.log(`Get file created at: ${date}`);
       return date;
     } catch (error) {
       this.logger.error(error);

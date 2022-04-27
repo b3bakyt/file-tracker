@@ -1,12 +1,11 @@
 FROM node:14
 
-WORKDIR /usr/src/app
+WORKDIR . /usr/src/app
 
 COPY package.json ./
 COPY yarn.lock ./
 
-RUN mkdir -r /usr/src/files
-RUN ls -la
+RUN mkdir /usr/src/files
 RUN yarn install --production
 
 COPY dist ./dist
